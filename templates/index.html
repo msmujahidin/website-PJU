@@ -16,10 +16,10 @@
                
                 <h2>Manage <b>data</b> <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Cari Data" title="Type in a name"> <button type="button"  class="btn btn-success float-right"
                 data-toggle="modal" data-target="#mymodal">Add data baru</button> 
+
                 <label>Show <select name="example_length" aria-controls="example" class=""><option value="10">10</option><option value="25">25</option><option value="50">50</option><option value="100">100</option></select> entries</label>
                 
                  </h2>
-
                
 
 
@@ -49,7 +49,7 @@
                 {% endif %}
                 {% endwith %}
 
-
+                <div style="overflow-x:auto;">
                 <table id = "myTable" class="table table-hover table-dark" witdh="100%">
 
                     <tr>
@@ -222,6 +222,7 @@
 
 
                 </table>
+                </div>
                 <script>
                function myFunction() {
                var input, filter, table, tr, td, i, txtValue;
