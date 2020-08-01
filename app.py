@@ -3,12 +3,8 @@ from flask_sqlalchemy import SQLAlchemy
 import psycopg2
 
 
-
-
 app = Flask(__name__)
 app.secret_key = "Secret Key"
-
-
 
 @app.before_request
 def before_request():
@@ -96,7 +92,7 @@ def profile():
     
     return render_template('index.html', employees = all_data)
 
-@app.route('/login', methods=['GET', 'POST'])
+@app.route('/', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
         session.pop('user_id', None)
@@ -168,8 +164,6 @@ def update():
         return redirect(url_for('Index'))
 
 
-
-
 #This route is for deleting our employee
 @app.route('/delete/<id>/', methods = ['GET', 'POST'])
 def delete(id):
@@ -179,11 +173,6 @@ def delete(id):
     flash("Employee Deleted Successfully")
 
     return redirect(url_for('Index'))
-
-
-
-
-
 
 if __name__ == "__main__":
     app.run(debug=True)
