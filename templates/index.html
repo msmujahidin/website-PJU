@@ -1,0 +1,341 @@
+{% extends 'base.html' %}
+{% include 'header.html' %}
+
+
+
+{% block title %} Home {% endblock %}
+
+
+
+{% block body %}
+
+<div class="container">
+    <div class="row" witdh = "10%">
+        <div>
+            <div class="jumbotron p-3">
+               
+                <h2>Manage <b>data</b> <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Cari Data" title="Type in a name"> <button type="button"  class="btn btn-success float-right"
+                data-toggle="modal" data-target="#mymodal">Add data baru</button> 
+                <label>Show <select name="example_length" aria-controls="example" class=""><option value="10">10</option><option value="25">25</option><option value="50">50</option><option value="100">100</option></select> entries</label>
+                
+                 </h2>
+
+               
+
+
+                {% with messages = get_flashed_messages() %}
+
+                {% if messages %}
+
+                {% for message in messages %}
+
+                <div class="alert alert-success alert-dismissable" role="alert">
+
+                    <button type="button" class="close" data-dismiss="alert" aria-label="close">
+
+                        <span aria-hidden="true">x</span>
+
+                    </button>
+
+
+                {{message}}
+
+
+                </div>
+
+
+                {% endfor %}
+
+                {% endif %}
+                {% endwith %}
+
+
+                <table id = "myTable" class="table table-hover table-dark" witdh="100%">
+
+                    <tr>
+
+                        <th>id</th>
+                        <th>no_gateway</th>
+                        <th>id_gateway</th>
+                        <th>no_mc</th>
+                        <th>id_mc</th>
+                        <th>tegangan</th>
+                        <th>arus</th>
+                        <th>frequensi</th>
+                        <th>power_factor</th>
+                        <th>daya</th>
+                        <th>energi</th>
+                       
+                        <th>waktu</th>
+                        <th>Action</th>
+
+
+                    </tr>
+
+
+                   {% for row in employees %}
+                    <tr>
+                        <td>{{row.id}}</td>
+                        <td>{{row.no_gateway}}</td>
+                        <td>{{row.id_gateway}}</td>
+                        <td>{{row.no_mc}}</td>
+                        <td>{{row.id_mc}}</td>
+                        <td>{{row.tegangan}}</td>
+                        <td>{{row.arus}}</td>
+                        <td>{{row.frequensi}}</td>
+                        <td>{{row.power_factor}}</td>
+                        <td>{{row.daya}}</td>
+                        <td>{{row.energi}}</td>
+                        
+                        <td>{{row.waktu}}</td>
+                        <td>
+                            <a href="/update/{{row.id}}" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#modaledit{{row.id}}">Edit</a>
+                            <a href="/delete/{{row.id}}" class="btn btn-danger btn-xs" onclick="return confirm('Are You Sure To Delete ?')">Delete</a>
+                        </td>
+                    </tr>
+
+
+                  <!-- Modal Edit Employee-->
+<div id="modaledit{{row.id}}" class="modal fade" role="dialog">
+   <div class="modal-dialog">
+
+
+      <div class="modal-content">
+
+
+         <div class="modal-header">
+
+
+            <h4 class="modal-title">Update Information</h4>
+
+
+         </div>
+
+
+         <div class="modal-body">
+
+
+            <form action="{{url_for('update')}}" method="POST">
+
+
+               <div class="form-group">
+
+
+                  <label>no_gateway:</label>
+                   <input type="hidden"  name="id" value="{{row.id}}">
+
+                  <input type="text" class="form-control" name="no_gateway" value="{{row.no_gateway}}">
+
+
+               </div>
+
+
+
+               <div class="form-group">
+
+
+                  <label>id_gateway:</label>
+
+                  <input type="text" class="form-control" name="id_gateway" value="{{row.id_gateway}}">
+
+
+               </div>
+
+
+               <div class="form-group">
+
+
+                  <label>no_mc:</label>
+
+                  <input type="text" class="form-control" name="no_mc" value="{{row.no_mc}}">
+
+
+               </div>
+
+
+               <div class="form-group">
+
+
+                  <label>id_mc:</label>
+                 
+                  <input type="text" class="form-control" name="id_mc" value="{{row.id_mc}}">
+
+
+               </div>
+
+               <div class="form-group">
+
+
+                  <label>tegangan:</label>
+                 
+                  <input type="text" class="form-control" name="tegangan" value="{{row.tegangan}}">
+               
+
+               </div>
+
+               <div class="form-group">
+
+
+                  <label>arus:</label>
+                 
+                  <input type="text" class="form-control" name="arus" value="{{row.arus}}">
+
+
+               </div>
+
+
+
+
+               <div class="form-group">
+
+
+                  <button class="btn btn-primary" type="submit">Update</button>
+
+
+               </div>
+
+
+            </form>
+
+
+         </div>
+
+
+         <div class="modal-footer">
+
+
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+
+         </div>
+
+
+      </div>
+
+
+   </div>
+
+</div>
+
+
+                    {% endfor %}
+
+
+                </table>
+                <script>
+               function myFunction() {
+               var input, filter, table, tr, td, i, txtValue;
+               input = document.getElementById("myInput");
+               filter = input.value.toUpperCase();
+               table = document.getElementById("myTable");
+               tr = table.getElementsByTagName("tr");
+               for (i = 0; i < tr.length; i++) {
+                  td = tr[i].getElementsByTagName("td")[0];
+                  if (td) {
+                     txtValue = td.textContent || td.innerText;
+                     if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                     tr[i].style.display = "";
+                     } else {
+                     tr[i].style.display = "none";
+                     }
+                  }       
+               }
+               }
+</script>
+                
+
+
+            </div>
+
+
+
+                  <!-- Modal Add Employee-->
+
+
+<div id="mymodal" class="modal fade" role="dialog">
+   <div class="modal-dialog">
+      <div class="modal-content">
+         <div class="modal-header">
+
+            <h4 class="modal-title">Add Data</h4>
+         </div>
+         <div class="modal-body">
+
+            <form action="{{url_for('insert')}}" method="POST">
+
+
+               <div class="form-group">
+
+                  <label>no_gateway:</label>
+                  <input type="text" class="form-control" name="no_gateway" required="1">
+
+
+               </div>
+
+
+                <div class="form-group">
+
+
+                  <label>id_gateway:</label>
+                  <input type="text" class="form-control" name="id_gateway" required="1">
+
+
+               </div>
+
+
+                <div class="form-group">
+
+
+                  <label>no_mc:</label>
+                  <input type="text" class="form-control" name="id_mc" required="1">
+
+
+               </div>
+
+
+
+               <div class="form-group">
+
+
+                  <button class="btn btn-primary" type="submit">Add Data</button>
+
+
+               </div>
+
+
+            </form>
+
+
+         </div>
+
+
+         <div class="modal-footer">
+
+
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+
+         </div>
+
+
+      </div>
+
+
+   </div>
+
+
+</div>
+
+
+
+
+
+        </div>
+
+    </div>
+
+
+</div>
+
+
+{% endblock %}
